@@ -3,39 +3,53 @@ package com.fury.shopathing.data.remote
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.fury.shopathing.domain.model.Product
+import android.util.Log // Add Logging
 
 class ProductPagingSource(
     private val api: ShopApi
 ) : PagingSource<Int, Product>() {
 
-    // The logic to fetch a "page" of data
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
         return try {
-            // 1. Get the current offset (default to 0 if null)
             val offset = params.key ?: 0
+            val loadSize = params.loadSize
 
-            // 2. Fetch data from API (limit comes from the Pager config)
-            // Note: params.loadSize is usually 3 * pageSize for the first load
+            Log.d("PagingDebug", "Requesting: Offset=$offset, Limit=$loadSize")
+
+            // 1. Fetch from API
             val response = api.getProducts(offset = offset, limit = params.loadSize)
 
-            // 3. Map DTO to Domain Model
-            val products = response.map { it.toProduct() }
+            Log.d("PagingDebug", "API Response Size: ${response.size}")
 
-            // 4. Return the Page
+            // 2. Safe Mapping (The Fix)
+            // Instead of .map {}, we use .mapNotNull {} to skip broken items
+            val products = response.mapNotNull { dto ->
+                try {
+                    dto.toProduct() // Try to convert
+                } catch (e: Exception) {
+                    // If a specific item is broken (garbage data), skip it!
+                    Log.e("PagingSource", "Skipping bad item: ${dto.id}")
+                    null
+                }
+            }
+
+            Log.d("PagingDebug", "Valid Products after filtering: ${products.size}")
+
+            // 3. Return valid products only
             LoadResult.Page(
                 data = products,
-                // If offset is 0, we can't go back, so prevKey is null
-                prevKey = if (offset == 0) null else offset - params.loadSize,
-                // If empty list, we are at the end, so nextKey is null.
-                // Else, next offset is current offset + number of items loaded
-                nextKey = if (products.isEmpty()) null else offset + params.loadSize
+                prevKey = if (offset == 0) null else offset - loadSize,
+                // Fix Logic: If we got fewer items than requested, we might be at the end,
+                // BUT let's try to fetch more anyway unless it's strictly empty.
+                nextKey = if (response.isEmpty()) null else offset + loadSize
             )
         } catch (e: Exception) {
+            e.printStackTrace()
             LoadResult.Error(e)
         }
     }
 
-    // This handles what happens if the list invalidates (like swipe-to-refresh)
+    // ... getRefreshKey stays the same ...
     override fun getRefreshKey(state: PagingState<Int, Product>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey?.plus(state.config.pageSize)

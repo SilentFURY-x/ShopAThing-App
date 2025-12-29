@@ -17,10 +17,12 @@ class ProductRepositoryImpl @Inject constructor(
 ) : ProductRepository {
 
     override fun getProducts(): Flow<PagingData<Product>> {
-        // Pager is the class that connects the PagingSource to the UI
         return Pager(
             config = PagingConfig(
-                pageSize = 20, // Load 20 items at a time
+                pageSize = 20,
+                // ADD THIS LINE:
+                initialLoadSize = 20, // Forces the first load to be exactly 20, not 60
+                prefetchDistance = 10,
                 enablePlaceholders = false
             ),
             pagingSourceFactory = { ProductPagingSource(api) }
