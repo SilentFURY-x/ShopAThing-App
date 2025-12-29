@@ -16,10 +16,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.fury.shopathing.presentation.components.ProductCard
 import com.fury.shopathing.utils.DummyData
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    // Inject the ViewModel automatically
+    viewModel: HomeViewModel = hiltViewModel()
+) {
+    // Observe the state
+    val uiState by viewModel.uiState.collectAsState()
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -31,17 +43,32 @@ fun HomeScreen() {
             )
         }
     ) { paddingValues ->
-        // This is the Grid View
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2), // 2 Columns like a real shop
-            contentPadding = PaddingValues(8.dp),
-            modifier = Modifier.padding(paddingValues)
-        ) {
-            items(DummyData.productList) { product ->
-                ProductCard(
-                    product = product,
-                    onClick = { /* TODO: Navigate to Details later */ }
-                )
+
+        // Handle the different states
+        when (val state = uiState) {
+            is HomeUiState.Loading -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            }
+            is HomeUiState.Error -> {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
+                    Text(text = "Error: ${state.message}", color = MaterialTheme.colorScheme.error)
+                }
+            }
+            is HomeUiState.Success -> {
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
+                    contentPadding = PaddingValues(8.dp),
+                    modifier = Modifier.padding(paddingValues)
+                ) {
+                    items(state.products) { product ->
+                        ProductCard(
+                            product = product,
+                            onClick = { /* Navigate to Details */ }
+                        )
+                    }
+                }
             }
         }
     }
