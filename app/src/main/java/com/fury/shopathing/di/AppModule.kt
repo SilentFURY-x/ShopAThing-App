@@ -17,6 +17,8 @@ import android.app.Application
 import androidx.room.Room
 import com.fury.shopathing.data.local.ShopDatabase
 import com.fury.shopathing.data.local.CartDao
+import com.fury.shopathing.data.repository.CartRepositoryImpl
+import com.fury.shopathing.domain.repository.CartRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -64,5 +66,11 @@ object AppModule {
     @Singleton
     fun provideCartDao(db: ShopDatabase): CartDao {
         return db.cartDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCartRepository(dao: CartDao): CartRepository {
+        return CartRepositoryImpl(dao)
     }
 }

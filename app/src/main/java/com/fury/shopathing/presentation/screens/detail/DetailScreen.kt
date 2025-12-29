@@ -35,13 +35,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.fury.shopathing.domain.model.Product
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
+
     navController: NavController,
     viewModel: DetailViewModel = hiltViewModel()
 ) {
+    val context = LocalContext.current // To show Toast
     val state by viewModel.state.collectAsState()
 
     Scaffold(
@@ -61,10 +65,14 @@ fun DetailScreen(
             )
         },
         bottomBar = {
-            // Only show button when data is successfully loaded
             if (state is DetailUiState.Success) {
                 Button(
-                    onClick = { /* TODO: Add to Cart Logic later */ },
+                    onClick = {
+                        // 1. Call the ViewModel
+                        viewModel.addToCart((state as DetailUiState.Success).product)
+                        // 2. Show feedback
+                        Toast.makeText(context, "Added to Cart!", Toast.LENGTH_SHORT).show()
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)

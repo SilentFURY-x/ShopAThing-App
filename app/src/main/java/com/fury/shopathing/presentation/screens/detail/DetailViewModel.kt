@@ -11,10 +11,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.fury.shopathing.domain.repository.CartRepository
+import com.fury.shopathing.data.local.CartEntity
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val repository: ProductRepository,
+    private val cartRepository: CartRepository,
     // SavedStateHandle automatically holds the arguments passed via Navigation
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
@@ -41,6 +44,19 @@ class DetailViewModel @Inject constructor(
             } catch (e: Exception) {
                 _state.value = DetailUiState.Error(e.message ?: "Failed to load product")
             }
+        }
+    }
+
+    fun addToCart(product: Product) {
+        viewModelScope.launch {
+            val entity = CartEntity(
+                productId = product.id,
+                title = product.title,
+                price = product.price,
+                imageUrl = product.imageUrl,
+                quantity = 1
+            )
+            cartRepository.addToCart(entity)
         }
     }
 }
