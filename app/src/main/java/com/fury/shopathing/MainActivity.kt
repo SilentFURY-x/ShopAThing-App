@@ -20,6 +20,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
 import com.fury.shopathing.presentation.Screen
+import com.fury.shopathing.presentation.screens.auth.LoginScreen
+import com.fury.shopathing.presentation.screens.auth.SignupScreen
 import com.fury.shopathing.presentation.screens.detail.DetailScreen
 
 @AndroidEntryPoint
@@ -33,24 +35,30 @@ class MainActivity : ComponentActivity() {
 
                 NavHost(
                     navController = navController,
-                    startDestination = Screen.Home.route
+                    startDestination = Screen.Login.route // <--- CHANGE THIS TO LOGIN
                 ) {
-
-                    // 1. The Home Screen
-                    composable(route = Screen.Home.route) {
-                        HomeScreen(
-                            navController = navController // Pass controller to Home
-                        )
+                    // 1. Login Screen
+                    composable(route = Screen.Login.route) {
+                        LoginScreen(navController = navController)
                     }
 
-                    // 2. The Detail Screen (expects an ID)
+                    // 2. Signup Screen
+                    composable(route = Screen.Signup.route) {
+                        SignupScreen(navController = navController)
+                    }
+
+                    // 3. Home Screen
+                    composable(route = Screen.Home.route) {
+                        HomeScreen(navController = navController)
+                    }
+
+                    // 4. Detail Screen
                     composable(
                         route = Screen.Detail.route,
                         arguments = listOf(navArgument("productId") { type = NavType.IntType })
                     ) { backStackEntry ->
-                        // Extract the ID from the URL
                         val productId = backStackEntry.arguments?.getInt("productId") ?: 0
-                        DetailScreen(navController = navController)
+                        DetailScreen(navController = navController) // You might need to add logic here later if needed
                     }
                 }
             }
