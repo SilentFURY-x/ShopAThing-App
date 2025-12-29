@@ -22,6 +22,7 @@ import androidx.navigation.navArgument
 import com.fury.shopathing.presentation.Screen
 import com.fury.shopathing.presentation.screens.auth.LoginScreen
 import com.fury.shopathing.presentation.screens.auth.SignupScreen
+import com.fury.shopathing.presentation.screens.auth.SplashScreen
 import com.fury.shopathing.presentation.screens.detail.DetailScreen
 
 @AndroidEntryPoint
@@ -35,8 +36,12 @@ class MainActivity : ComponentActivity() {
 
                 NavHost(
                     navController = navController,
-                    startDestination = Screen.Login.route // <--- CHANGE THIS TO LOGIN
+                    startDestination = Screen.Splash.route
                 ) {
+                    // 0. Splash Screen
+                    composable(route = Screen.Splash.route) {
+                        SplashScreen(navController = navController)
+                    }
                     // 1. Login Screen
                     composable(route = Screen.Login.route) {
                         LoginScreen(navController = navController)
