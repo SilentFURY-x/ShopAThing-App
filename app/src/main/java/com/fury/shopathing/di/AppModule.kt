@@ -13,6 +13,10 @@ import javax.inject.Singleton
 import com.google.firebase.auth.FirebaseAuth
 import com.fury.shopathing.domain.repository.AuthRepository
 import com.fury.shopathing.data.repository.AuthRepositoryImpl
+import android.app.Application
+import androidx.room.Room
+import com.fury.shopathing.data.local.ShopDatabase
+import com.fury.shopathing.data.local.CartDao
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,5 +48,21 @@ object AppModule {
     @Singleton
     fun provideAuthRepository(firebaseAuth: FirebaseAuth): AuthRepository {
         return AuthRepositoryImpl(firebaseAuth)
+    }
+
+    @Provides
+    @Singleton
+    fun provideShopDatabase(app: Application): ShopDatabase {
+        return Room.databaseBuilder(
+            app,
+            ShopDatabase::class.java,
+            "shop_db"
+        ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCartDao(db: ShopDatabase): CartDao {
+        return db.cartDao()
     }
 }

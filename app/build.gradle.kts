@@ -45,6 +45,13 @@ android {
 
 dependencies {
 
+    // --- LOCAL DATABASE (Room) ---
+    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:$room_version")
+    // If you use Kotlin Symbol Processing (KSP) usually, but we are using kapt for Hilt, so let's stick to kapt for consistency
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:$room_version") // Extensions for Coroutines
+
     // --- FIREBASE SETUP ---
     // The Firebase BoM (Bill of Materials) manages versions for us
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
