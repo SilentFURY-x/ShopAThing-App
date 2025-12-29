@@ -23,6 +23,7 @@ import com.fury.shopathing.presentation.Screen
 import com.fury.shopathing.presentation.screens.auth.LoginScreen
 import com.fury.shopathing.presentation.screens.auth.SignupScreen
 import com.fury.shopathing.presentation.screens.auth.SplashScreen
+import com.fury.shopathing.presentation.screens.cart.CartScreen
 import com.fury.shopathing.presentation.screens.detail.DetailScreen
 
 @AndroidEntryPoint
@@ -38,6 +39,9 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     startDestination = Screen.Splash.route
                 ) {
+
+                    composable(Screen.Cart.route) { CartScreen(navController) }
+
                     // 0. Splash Screen
                     composable(route = Screen.Splash.route) {
                         SplashScreen(navController = navController)
@@ -61,7 +65,9 @@ class MainActivity : ComponentActivity() {
                     composable(
                         route = Screen.Detail.route,
                         arguments = listOf(navArgument("productId") { type = NavType.IntType })
-                    ) { backStackEntry ->
+                    )
+
+                    { backStackEntry ->
                         val productId = backStackEntry.arguments?.getInt("productId") ?: 0
                         DetailScreen(navController = navController) // You might need to add logic here later if needed
                     }

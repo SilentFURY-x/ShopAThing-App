@@ -21,7 +21,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.navigation.NavController
 import com.fury.shopathing.presentation.Screen
 
@@ -38,11 +42,17 @@ fun HomeScreen(
     Scaffold(
         topBar = {
             TopAppBar(
+                actions = {
+                    IconButton(onClick = { navController.navigate(Screen.Cart.route) }) {
+                        Icon(Icons.Default.ShoppingCart, contentDescription = "Cart")
+                    }
+                },
                 title = { Text("ShopAThing") },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
                 )
+
             )
         }
     ) { paddingValues ->
