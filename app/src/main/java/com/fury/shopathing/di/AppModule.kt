@@ -28,8 +28,7 @@ object AppModule {
     @Singleton
     fun provideShopApi(): ShopApi {
         return Retrofit.Builder()
-            // CHANGE THIS URL TO PLATZI:
-            .baseUrl("https://api.escuelajs.co/api/v1/")
+            .baseUrl("https://dummyjson.com/") // Switch to DummyJSON
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ShopApi::class.java)

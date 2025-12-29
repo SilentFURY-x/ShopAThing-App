@@ -8,9 +8,9 @@ interface ShopApi {
 
     @GET("products")
     suspend fun getProducts(
-        @Query("offset") offset: Int,
+        @Query("skip") skip: Int, // DummyJSON uses 'skip'
         @Query("limit") limit: Int
-    ): List<ProductDto>
+    ): ProductResponseDto // Return the Wrapper
 
     @GET("products/{id}")
     suspend fun getProductById(
