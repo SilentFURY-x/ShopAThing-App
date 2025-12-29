@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
                     ) { backStackEntry ->
                         // Extract the ID from the URL
                         val productId = backStackEntry.arguments?.getInt("productId") ?: 0
-                        DetailScreen(productId = productId)
+                        DetailScreen(navController = navController)
                     }
                 }
             }

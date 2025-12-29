@@ -21,4 +21,9 @@ class ProductRepositoryImpl @Inject constructor(
             emptyList() // Return empty list on error for now
         }
     }
+
+    override suspend fun getProductById(id: Int): Product {
+        // Fetch DTO from API and convert to clean Product model
+        return api.getProductById(id).toProduct()
+    }
 }
