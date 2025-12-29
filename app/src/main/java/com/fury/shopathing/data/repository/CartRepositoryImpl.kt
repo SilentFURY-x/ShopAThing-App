@@ -15,7 +15,16 @@ class CartRepositoryImpl @Inject constructor(
     }
 
     override suspend fun addToCart(item: CartEntity) {
-        dao.addToCart(item)
+        // 1. Check if item exists
+        val existingItem = dao.getCartItemById(item.productId)
+
+        if (existingItem != null) {
+            // 2. If it exists, just increment quantity
+            dao.updateQuantity(item.productId, existingItem.quantity + 1)
+        } else {
+            // 3. If it's new, insert it (default quantity is 1)
+            dao.addToCart(item)
+        }
     }
 
     override suspend fun deleteItem(item: CartEntity) {

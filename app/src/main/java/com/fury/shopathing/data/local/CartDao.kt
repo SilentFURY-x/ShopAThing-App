@@ -25,4 +25,7 @@ interface CartDao {
     // Update quantity specifically (Level 3 Requirement)
     @Query("UPDATE cart_table SET quantity = :quantity WHERE productId = :id")
     suspend fun updateQuantity(id: Int, quantity: Int)
+
+    @Query("SELECT * FROM cart_table WHERE productId = :id")
+    suspend fun getCartItemById(id: Int): CartEntity?
 }
