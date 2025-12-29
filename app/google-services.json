@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "513905737738",
+    "project_id": "shopathing-a8e74",
+    "storage_bucket": "shopathing-a8e74.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513905737738:android:19f93dcfc5644665919ff3",
+        "android_client_info": {
+          "package_name": "com.fury.shopathing"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ536wAwT_TIrBa1NIgm0M2VR5S1PgJPQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

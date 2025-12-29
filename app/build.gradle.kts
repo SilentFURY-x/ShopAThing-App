@@ -1,4 +1,5 @@
 plugins {
+    id("com.google.gms.google-services") // firebase
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
@@ -44,6 +45,12 @@ android {
 
 dependencies {
 
+    // --- FIREBASE SETUP ---
+    // The Firebase BoM (Bill of Materials) manages versions for us
+    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
+
+    // Firebase Authentication library
+    implementation("com.google.firebase:firebase-auth")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

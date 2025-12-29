@@ -10,6 +10,9 @@ import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
+import com.google.firebase.auth.FirebaseAuth
+import com.fury.shopathing.domain.repository.AuthRepository
+import com.fury.shopathing.data.repository.AuthRepositoryImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -29,5 +32,17 @@ object AppModule {
     @Singleton
     fun provideProductRepository(api: ShopApi): ProductRepository {
         return ProductRepositoryImpl(api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth {
+        return FirebaseAuth.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(firebaseAuth: FirebaseAuth): AuthRepository {
+        return AuthRepositoryImpl(firebaseAuth)
     }
 }
