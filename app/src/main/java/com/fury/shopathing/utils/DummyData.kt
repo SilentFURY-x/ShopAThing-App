@@ -10,7 +10,7 @@ object DummyData {
             price = 99.99,
             description = "High quality noise cancelling headphones.",
             category = "Electronics",
-            imageUrl = "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+            imageUrl = "https://picsum.photos/600/600?random=1" // reliable random image
         ),
         Product(
             id = 2,
@@ -18,7 +18,7 @@ object DummyData {
             price = 22.30,
             description = "Slim fit, comfortable cotton t-shirt.",
             category = "Clothing",
-            imageUrl = "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"
+            imageUrl = "https://picsum.photos/600/600?random=2"
         ),
         Product(
             id = 3,
@@ -26,7 +26,7 @@ object DummyData {
             price = 55.99,
             description = "Great outerwear for all seasons.",
             category = "Clothing",
-            imageUrl = "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"
+            imageUrl = "https://picsum.photos/600/600?random=3"
         ),
         Product(
             id = 4,
@@ -34,7 +34,7 @@ object DummyData {
             price = 149.99,
             description = "144Hz refresh rate for smooth gaming.",
             category = "Electronics",
-            imageUrl = "https://fakestoreapi.com/img/81Zt42ioCgL._AC_SX679_.jpg"
+            imageUrl = "https://picsum.photos/600/600?random=4"
         )
     )
 }
