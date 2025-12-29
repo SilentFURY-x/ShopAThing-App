@@ -22,10 +22,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.navigation.NavController
+import com.fury.shopathing.presentation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
+    navController: NavController,
     // Inject the ViewModel automatically
     viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -65,7 +68,10 @@ fun HomeScreen(
                     items(state.products) { product ->
                         ProductCard(
                             product = product,
-                            onClick = { /* Navigate to Details */ }
+                            onClick = {
+                                // NAVIGATE HERE:
+                                navController.navigate(Screen.Detail.createRoute(product.id))
+                            }
                         )
                     }
                 }
