@@ -5,25 +5,29 @@ import com.fury.shopathing.data.remote.toProduct
 import com.fury.shopathing.domain.repository.ProductRepository
 import javax.inject.Inject
 import com.fury.shopathing.domain.model.Product
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.fury.shopathing.data.remote.ProductPagingSource
+import kotlinx.coroutines.flow.Flow
 
 // @Inject tells Hilt how to create this class
 class ProductRepositoryImpl @Inject constructor(
     private val api: ShopApi
 ) : ProductRepository {
 
-    override suspend fun getProducts(): List<Product> {
-        // We fetch 20 items for now.
-        // In Level 3, we will make this dynamic for infinite scrolling.
-        return try {
-            api.getProducts(offset = 0, limit = 20).map { it.toProduct() }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            emptyList() // Return empty list on error for now
-        }
+    override fun getProducts(): Flow<PagingData<Product>> {
+        // Pager is the class that connects the PagingSource to the UI
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20, // Load 20 items at a time
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = { ProductPagingSource(api) }
+        ).flow
     }
 
     override suspend fun getProductById(id: Int): Product {
-        // Fetch DTO from API and convert to clean Product model
         return api.getProductById(id).toProduct()
     }
 }

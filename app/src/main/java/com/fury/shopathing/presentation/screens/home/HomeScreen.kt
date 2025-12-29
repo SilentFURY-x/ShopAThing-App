@@ -21,70 +21,94 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.ui.Alignment
 import androidx.navigation.NavController
 import com.fury.shopathing.presentation.Screen
+import androidx.paging.LoadState
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemKey // Optional, helps with performance
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     navController: NavController,
-    // Inject the ViewModel automatically
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    // Observe the state
-    val uiState by viewModel.uiState.collectAsState()
+    // Collect the paging flow
+    val products = viewModel.products.collectAsLazyPagingItems()
 
     Scaffold(
         topBar = {
             TopAppBar(
-                actions = {
-                    IconButton(onClick = { navController.navigate(Screen.Cart.route) }) {
-                        Icon(Icons.Default.ShoppingCart, contentDescription = "Cart")
-                    }
-                },
                 title = { Text("ShopAThing") },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
-                )
-
+                ),
+                actions = {
+                    IconButton(onClick = { navController.navigate(Screen.Cart.route) }) {
+                        Icon(Icons.Default.ShoppingCart, contentDescription = "Cart", tint = MaterialTheme.colorScheme.onPrimary)
+                    }
+                }
             )
         }
     ) { paddingValues ->
 
-        // Handle the different states
-        when (val state = uiState) {
-            is HomeUiState.Loading -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
-                    CircularProgressIndicator()
-                }
-            }
-            is HomeUiState.Error -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
-                    Text(text = "Error: ${state.message}", color = MaterialTheme.colorScheme.error)
-                }
-            }
-            is HomeUiState.Success -> {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    contentPadding = PaddingValues(8.dp),
-                    modifier = Modifier.padding(paddingValues)
-                ) {
-                    items(state.products) { product ->
+        Box(modifier = Modifier.fillMaxSize().padding(paddingValues)) {
+
+            // The Grid
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                contentPadding = PaddingValues(8.dp),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                // Paging uses 'items' differently. We pass the count.
+                items(products.itemCount) { index ->
+                    val product = products[index]
+                    if (product != null) {
                         ProductCard(
                             product = product,
-                            onClick = {
-                                // NAVIGATE HERE:
-                                navController.navigate(Screen.Detail.createRoute(product.id))
-                            }
+                            onClick = { navController.navigate(Screen.Detail.createRoute(product.id)) }
                         )
                     }
                 }
+
+                // Handle the "Loading More" spinner at the bottom
+                when (products.loadState.append) {
+                    is LoadState.Loading -> {
+                        item {
+                            Box(modifier = Modifier.fillMaxWidth().padding(16.dp), contentAlignment = Alignment.Center) {
+                                CircularProgressIndicator()
+                            }
+                        }
+                    }
+                    is LoadState.Error -> {
+                        item {
+                            Text("Error loading more items", color = MaterialTheme.colorScheme.error)
+                        }
+                    }
+                    else -> {}
+                }
+            }
+
+            // Handle the "Initial Loading" spinner (Center screen)
+            if (products.loadState.refresh is LoadState.Loading) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+
+            // Handle Initial Error
+            if (products.loadState.refresh is LoadState.Error) {
+                Text(
+                    text = "Error loading products",
+                    color = MaterialTheme.colorScheme.error,
+                    modifier = Modifier.align(Alignment.Center)
+                )
             }
         }
     }

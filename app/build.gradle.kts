@@ -45,6 +45,11 @@ android {
 
 dependencies {
 
+    // --- PAGINATION (Level 3) ---
+    val paging_version = "3.2.1"
+    implementation("androidx.paging:paging-runtime:$paging_version")
+    implementation("androidx.paging:paging-compose:3.3.0-alpha02") // Compose support
+
     // --- LOCAL DATABASE (Room) ---
     val room_version = "2.6.1"
     implementation("androidx.room:room-runtime:$room_version")
