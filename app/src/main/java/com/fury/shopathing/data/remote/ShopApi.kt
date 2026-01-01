@@ -31,7 +31,7 @@ interface ShopApi {
 
     // 4. Get List of Categories (for the UI chips)
     @GET("products/categories")
-    suspend fun getAllCategories(): List<String> // Returns ["smartphones", "laptops", ...]
+    suspend fun getAllCategories(): List<CategoryItemDto>
 
     @GET("products/{id}")
     suspend fun getProductById(@Path("id") id: Int): ProductDto

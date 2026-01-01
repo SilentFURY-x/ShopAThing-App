@@ -26,11 +26,13 @@ class ProductRepositoryImpl @Inject constructor(
 
     override suspend fun getCategories(): List<String> {
         return try {
-            val categories = api.getAllCategories()
-            // Add "All" to the start of the list for the UI
-            listOf("All") + categories
+            val response = api.getAllCategories()
+            // Map the objects to simple Strings (slugs)
+            val categoryNames = response.map { it.slug }
+            listOf("All") + categoryNames
         } catch (e: Exception) {
-            listOf("All") // Fallback
+            e.printStackTrace() // Log the error so we can see it
+            listOf("All")
         }
     }
 

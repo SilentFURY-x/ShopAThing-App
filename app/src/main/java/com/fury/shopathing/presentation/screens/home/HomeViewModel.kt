@@ -11,6 +11,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.FlowPreview
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -34,14 +35,15 @@ class HomeViewModel @Inject constructor(
     }
 
     // 4. THE MAGIC: Combine Search + Category to trigger new Paging Flows
-    @OptIn(ExperimentalCoroutinesApi::class)
+    @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class) // Add FlowPreview annotation
     val products: Flow<PagingData<Product>> = combine(
-        _searchQuery,
+        _searchQuery
+            .debounce(500L) // ▼▼▼ THE MAGIC FIX: Wait 500ms before searching
+            .onEach { if (it.isNotEmpty()) _selectedCategory.value = "All" }, // Auto-reset category when searching
         _selectedCategory
     ) { query, category ->
         Pair(query, category)
     }.flatMapLatest { (query, category) ->
-        // Whenever query or category changes, this block runs and creates a NEW Pager
         repository.getProducts(query, category)
     }.cachedIn(viewModelScope)
 
