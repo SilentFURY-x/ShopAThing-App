@@ -1,6 +1,7 @@
 package com.fury.shopathing.presentation.components
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -17,6 +18,10 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.fury.shopathing.domain.model.Product
+import coil.compose.SubcomposeAsyncImage
+import androidx.compose.foundation.layout.Box
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
 
 @Composable
 fun ProductCard(
@@ -36,24 +41,26 @@ fun ProductCard(
     ) {
         Column {
             // 1. Product Image
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(product.imageUrl)
-                    .crossfade(true)
-                    .listener(
-                        onError = { request, result ->
-                            // THIS IS THE KEY: It will print the exact error to Logcat
-                            Log.e("COIL_ERROR", "Error loading image: ${result.throwable}")
-                        }
-                    )
-                    .build(),
+            SubcomposeAsyncImage(
+                model = product.imageUrl,
                 contentDescription = product.title,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(180.dp),
+                    .height(150.dp),
                 contentScale = ContentScale.Crop,
-                error = rememberVectorPainter(Icons.Default.Warning),
-                placeholder = rememberVectorPainter(Icons.Default.Warning)
+                loading = {
+                    // This shows while the image is downloading
+                    Box(modifier = Modifier.fillMaxSize().shimmerEffect())
+                },
+                error = {
+                    // This shows if the download fails (Keep the triangle or use a gray box)
+                    Box(
+                        modifier = Modifier.fillMaxSize().background(Color.LightGray),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(Icons.Default.Warning, contentDescription = "Error", tint = Color.Gray)
+                    }
+                }
             )
 
             // 2. Product Details

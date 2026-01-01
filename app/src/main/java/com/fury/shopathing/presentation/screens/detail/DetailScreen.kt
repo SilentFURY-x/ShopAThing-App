@@ -37,6 +37,8 @@ import coil.compose.AsyncImage
 import com.fury.shopathing.domain.model.Product
 import android.widget.Toast
 import androidx.compose.ui.platform.LocalContext
+import coil.compose.SubcomposeAsyncImage
+import com.fury.shopathing.presentation.components.shimmerEffect
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -115,15 +117,24 @@ fun ProductDetailContent(product: Product) {
             .verticalScroll(rememberScrollState())
     ) {
         // Big Product Image
-        AsyncImage(
+        SubcomposeAsyncImage(
             model = product.imageUrl,
             contentDescription = product.title,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(300.dp),
             contentScale = ContentScale.Crop,
-            error = rememberVectorPainter(Icons.Default.Warning),
-            placeholder = rememberVectorPainter(Icons.Default.Warning)
+            loading = {
+                Box(modifier = Modifier.fillMaxSize().shimmerEffect())
+            },
+            error = {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(Icons.Default.Warning, contentDescription = "Error", tint = MaterialTheme.colorScheme.error)
+                }
+            }
         )
 
         // Product Information
