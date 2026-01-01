@@ -45,6 +45,9 @@ android {
 
 dependencies {
 
+    // --- PREFERENCES (For Dark Mode) ---
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
     // --- PAGINATION (Level 3) ---
     val paging_version = "3.2.1"
     implementation("androidx.paging:paging-runtime:$paging_version")

@@ -18,14 +18,17 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.fury.shopathing.presentation.Screen
+import com.fury.shopathing.presentation.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
     navController: NavController,
-    viewModel: ProfileViewModel = hiltViewModel()
+    viewModel: ProfileViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel = hiltViewModel()
 ) {
     val email by viewModel.userEmail.collectAsState()
+    val isDarkMode by mainViewModel.isDarkMode.collectAsState() // <--- OBSERVE STATE
 
     Scaffold(
         topBar = {
@@ -84,7 +87,13 @@ fun ProfileScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(text = "Dark Mode", style = MaterialTheme.typography.titleMedium)
-                Switch(checked = false, onCheckedChange = { /* TODO: Implement Next Step */ })
+
+                Switch(
+                    checked = isDarkMode, // Bind to state
+                    onCheckedChange = { isChecked ->
+                        mainViewModel.toggleTheme(isChecked) // Update state
+                    }
+                )
             }
 
             Spacer(modifier = Modifier.weight(1f))

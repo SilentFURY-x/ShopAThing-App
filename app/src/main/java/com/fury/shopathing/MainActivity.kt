@@ -26,6 +26,10 @@ import com.fury.shopathing.presentation.screens.auth.SplashScreen
 import com.fury.shopathing.presentation.screens.cart.CartScreen
 import com.fury.shopathing.presentation.screens.detail.DetailScreen
 import com.fury.shopathing.presentation.screens.profile.ProfileScreen
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.fury.shopathing.presentation.MainViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -33,7 +37,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ShopathingTheme {
+            // 1. Get the MainViewModel
+            val mainViewModel: MainViewModel = hiltViewModel()
+
+            // 2. Observe the Theme State
+            val isDarkTheme by mainViewModel.isDarkMode.collectAsState()
+
+            // 3. Pass it to your Theme
+            ShopathingTheme(darkTheme = isDarkTheme) {
+
                 val navController = rememberNavController()
 
                 NavHost(

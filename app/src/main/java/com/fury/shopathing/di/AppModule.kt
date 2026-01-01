@@ -14,11 +14,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.fury.shopathing.domain.repository.AuthRepository
 import com.fury.shopathing.data.repository.AuthRepositoryImpl
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.fury.shopathing.data.local.ShopDatabase
 import com.fury.shopathing.data.local.CartDao
 import com.fury.shopathing.data.repository.CartRepositoryImpl
 import com.fury.shopathing.domain.repository.CartRepository
+import com.fury.shopathing.data.local.UserPreferences
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -72,5 +75,11 @@ object AppModule {
     @Singleton
     fun provideCartRepository(dao: CartDao): CartRepository {
         return CartRepositoryImpl(dao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserPreferences(@ApplicationContext context: Context): UserPreferences {
+        return UserPreferences(context)
     }
 }
