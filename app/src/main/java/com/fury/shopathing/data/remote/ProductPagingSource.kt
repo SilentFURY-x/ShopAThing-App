@@ -5,25 +5,36 @@ import androidx.paging.PagingState
 import com.fury.shopathing.domain.model.Product
 
 class ProductPagingSource(
-    private val api: ShopApi
+    private val api: ShopApi,
+    private val query: String? = null,    // Search query
+    private val category: String? = null  // Selected category
 ) : PagingSource<Int, Product>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Product> {
         return try {
             val position = params.key ?: 0
+            val limit = params.loadSize
 
-            // 1. Use 'skip' instead of 'offset'
-            val responseWrapper = api.getProducts(skip = position, limit = params.loadSize)
+            // DECIDE WHICH ENDPOINT TO CALL
+            val responseWrapper = when {
+                // Case 1: Searching
+                !query.isNullOrEmpty() -> api.searchProducts(query, position, limit)
 
-            // 2. Extract the list from the wrapper
+                // Case 2: Filtering by Category
+                !category.isNullOrEmpty() && category != "All" -> api.getProductsByCategory(category, position, limit)
+
+                // Case 3: Default (All Products)
+                else -> api.getProducts(position, limit)
+            }
+
             val products = responseWrapper.products.map { it.toProduct() }
 
-            // 3. Calculate next key
-            val nextKey = if (products.isEmpty()) null else position + params.loadSize
+            // Logic for nextKey remains the same
+            val nextKey = if (products.isEmpty()) null else position + limit
 
             LoadResult.Page(
                 data = products,
-                prevKey = if (position == 0) null else position - params.loadSize,
+                prevKey = if (position == 0) null else position - limit,
                 nextKey = nextKey
             )
         } catch (e: Exception) {

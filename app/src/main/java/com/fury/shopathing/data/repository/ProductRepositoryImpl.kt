@@ -16,17 +16,22 @@ class ProductRepositoryImpl @Inject constructor(
     private val api: ShopApi
 ) : ProductRepository {
 
-    override fun getProducts(): Flow<PagingData<Product>> {
+    override fun getProducts(query: String?, category: String?): Flow<PagingData<Product>> {
         return Pager(
-            config = PagingConfig(
-                pageSize = 20,
-                // ADD THIS LINE:
-                initialLoadSize = 20, // Forces the first load to be exactly 20, not 60
-                prefetchDistance = 10,
-                enablePlaceholders = false
-            ),
-            pagingSourceFactory = { ProductPagingSource(api) }
+            config = PagingConfig(pageSize = 20, enablePlaceholders = false),
+            // Pass the query/category to the factory
+            pagingSourceFactory = { ProductPagingSource(api, query, category) }
         ).flow
+    }
+
+    override suspend fun getCategories(): List<String> {
+        return try {
+            val categories = api.getAllCategories()
+            // Add "All" to the start of the list for the UI
+            listOf("All") + categories
+        } catch (e: Exception) {
+            listOf("All") // Fallback
+        }
     }
 
     override suspend fun getProductById(id: Int): Product {
