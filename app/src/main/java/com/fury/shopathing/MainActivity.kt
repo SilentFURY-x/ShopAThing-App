@@ -25,6 +25,7 @@ import com.fury.shopathing.presentation.screens.auth.SignupScreen
 import com.fury.shopathing.presentation.screens.auth.SplashScreen
 import com.fury.shopathing.presentation.screens.cart.CartScreen
 import com.fury.shopathing.presentation.screens.detail.DetailScreen
+import com.fury.shopathing.presentation.screens.profile.ProfileScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -39,6 +40,10 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     startDestination = Screen.Splash.route
                 ) {
+
+                    composable(route = Screen.Profile.route) {
+                        ProfileScreen(navController = navController)
+                    }
 
                     composable(Screen.Cart.route) { CartScreen(navController) }
 
