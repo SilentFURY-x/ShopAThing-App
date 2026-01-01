@@ -30,6 +30,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.fury.shopathing.presentation.MainViewModel
+import com.fury.shopathing.presentation.screens.cart.OrderSuccessScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -52,6 +53,10 @@ class MainActivity : ComponentActivity() {
                     navController = navController,
                     startDestination = Screen.Splash.route
                 ) {
+
+                    composable(route = Screen.OrderSuccess.route) {
+                        OrderSuccessScreen(navController = navController)
+                    }
 
                     composable(route = Screen.Profile.route) {
                         ProfileScreen(navController = navController)

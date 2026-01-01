@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.fury.shopathing.presentation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,8 +42,8 @@ fun CartScreen(
                 Button(
                     onClick = {
                         viewModel.checkout()
-                        Toast.makeText(context, "Order Placed Successfully!", Toast.LENGTH_LONG).show()
-                        navController.popBackStack() // Go back to home after checkout
+                        Toast.makeText(context, "Enjoy Your Goodies!", Toast.LENGTH_LONG).show()
+                        navController.navigate(Screen.OrderSuccess.route)
                     },
                     modifier = Modifier.fillMaxWidth().padding(16.dp)
                 ) {

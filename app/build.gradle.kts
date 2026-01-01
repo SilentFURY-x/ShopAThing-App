@@ -45,6 +45,9 @@ android {
 
 dependencies {
 
+    // --- ANIMATIONS (Lottie) ---
+    implementation("com.airbnb.android:lottie-compose:6.3.0")
+
     // --- PREFERENCES (For Dark Mode) ---
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
