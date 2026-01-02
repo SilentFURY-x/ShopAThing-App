@@ -21,6 +21,7 @@ import com.fury.shopathing.presentation.Screen
 import com.fury.shopathing.presentation.components.CategoryFilter
 import com.fury.shopathing.presentation.components.ProductCard
 import com.fury.shopathing.presentation.components.ShopSearchBar
+import androidx.compose.ui.graphics.Color
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -72,7 +73,8 @@ fun HomeScreen(
                             // If cart is empty, just show the regular icon without a badge
                             Icon(
                                 imageVector = Icons.Default.ShoppingCart,
-                                contentDescription = "Cart"
+                                contentDescription = "Cart",
+                                tint = Color.DarkGray
                             )
                         }
                     }

@@ -44,6 +44,7 @@ import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
+import androidx.compose.ui.graphics.Color
 import com.fury.shopathing.presentation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -90,7 +91,7 @@ fun DetailScreen(
                                 Icon(Icons.Default.ShoppingCart, contentDescription = "Cart", tint = MaterialTheme.colorScheme.onPrimary)
                             }
                         } else {
-                            Icon(Icons.Default.ShoppingCart, contentDescription = "Cart")
+                            Icon(Icons.Default.ShoppingCart, contentDescription = "Cart", tint = Color.DarkGray)
                         }
                     }
                 },
