@@ -116,7 +116,7 @@ com.fury.shopathing
 
 1.  **Clone the repository:**
     ```bash
-        git clone [https://github.com/SilentFURY-x/ShopAThing.git](https://github.com/SilentFURY-x/ShopAThing.git)
+        git clone https://github.com/SilentFURY-x/ShopAThing-App.git
     ```
 2.  **Open in Android Studio:**
      * Requires Android Studio Hedgehog or newer.
