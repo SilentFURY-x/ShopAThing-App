@@ -28,6 +28,7 @@ fun HomeScreen(
     navController: NavController,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
+    val cartCount by viewModel.cartItemCount.collectAsState()
     val products = viewModel.products.collectAsLazyPagingItems()
     val searchQuery by viewModel.searchQuery.collectAsState()
     val categories by viewModel.categories.collectAsState()
@@ -49,8 +50,31 @@ fun HomeScreen(
                 },
 
                 actions = {
+                    // Wrap the Icon in an IconButton to make it clickable
                     IconButton(onClick = { navController.navigate(Screen.Cart.route) }) {
-                        Icon(Icons.Default.ShoppingCart, contentDescription = "Cart", tint = MaterialTheme.colorScheme.onPrimary)
+
+                        // BADGED BOX LOGIC
+                        if (cartCount > 0) {
+                            BadgedBox(
+                                badge = {
+                                    Badge {
+                                        Text(text = cartCount.toString())
+                                    }
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.ShoppingCart,
+                                    contentDescription = "Cart",
+                                    tint = MaterialTheme.colorScheme.onPrimary
+                                )
+                            }
+                        } else {
+                            // If cart is empty, just show the regular icon without a badge
+                            Icon(
+                                imageVector = Icons.Default.ShoppingCart,
+                                contentDescription = "Cart"
+                            )
+                        }
                     }
                 }
             )

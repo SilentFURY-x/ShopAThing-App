@@ -13,6 +13,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.fury.shopathing.domain.repository.CartRepository
 import com.fury.shopathing.data.local.CartEntity
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
@@ -22,6 +25,9 @@ class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    val cartItemCount = cartRepository.getAllItems()
+        .map { items -> items.size }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
     private val _state = MutableStateFlow<DetailUiState>(DetailUiState.Loading)
     val state: StateFlow<DetailUiState> = _state.asStateFlow()
 

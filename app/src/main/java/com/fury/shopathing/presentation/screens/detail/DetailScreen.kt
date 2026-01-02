@@ -42,6 +42,8 @@ import com.fury.shopathing.presentation.components.shimmerEffect
 import android.content.Intent
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import com.fury.shopathing.presentation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -51,6 +53,7 @@ fun DetailScreen(
     navController: NavController,
     viewModel: DetailViewModel = hiltViewModel()
 ) {
+    val cartCount by viewModel.cartItemCount.collectAsState()
     val context = LocalContext.current // To show Toast
     val state by viewModel.state.collectAsState()
     val product = (state as? DetailUiState.Success)?.product
@@ -76,7 +79,19 @@ fun DetailScreen(
 
                     // 2. NEW: Cart Button (Always visible)
                     IconButton(onClick = { navController.navigate(Screen.Cart.route) }) {
-                        Icon(Icons.Default.ShoppingCart, contentDescription = "Cart", tint = MaterialTheme.colorScheme.onPrimary)
+                        if (cartCount > 0) {
+                            BadgedBox(
+                                badge = {
+                                    Badge {
+                                        Text(text = cartCount.toString())
+                                    }
+                                }
+                            ) {
+                                Icon(Icons.Default.ShoppingCart, contentDescription = "Cart", tint = MaterialTheme.colorScheme.onPrimary)
+                            }
+                        } else {
+                            Icon(Icons.Default.ShoppingCart, contentDescription = "Cart")
+                        }
                     }
                 },
                 title = { Text("Product Details") },

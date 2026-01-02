@@ -12,11 +12,23 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import kotlinx.coroutines.FlowPreview
+import com.fury.shopathing.domain.repository.CartRepository
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val repository: ProductRepository
+    private val repository: ProductRepository,
+    cartRepository: CartRepository // <--- 1. Injecting CartRepository
 ) : ViewModel() {
+
+    // 2. Creating a specific Flow just for the badge count
+    // We Map the LIST of items to an INT (size)
+    // 2. Creating a specific Flow just for the badge count
+    val cartItemCount = cartRepository.getAllItems()
+        .map { items -> items.size }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 
     // 1. Search Query State
     private val _searchQuery = MutableStateFlow("")
