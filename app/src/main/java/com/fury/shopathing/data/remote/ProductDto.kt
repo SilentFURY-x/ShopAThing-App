@@ -8,7 +8,8 @@ data class ProductDto(
     val price: Double,
     val description: String,
     val images: List<String>,
-    val category: String // DummyJSON sends category as a String!
+    val category: String, // DummyJSON sends category as a String!
+    val rating: Double = 0.0
 )
 
 fun ProductDto.toProduct(): Product {
@@ -19,6 +20,8 @@ fun ProductDto.toProduct(): Product {
         description = description,
         category = category,
         // DummyJSON images work perfectly, just take the first one
-        imageUrl = images.firstOrNull() ?: ""
+        imageUrl = images.firstOrNull() ?: "",
+        rating = rating
+
     )
 }

@@ -73,6 +73,7 @@ fun ProductCard(
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
+                RatingBar(rating = product.rating)
 
                 Text(
                     text = "$${product.price}",
