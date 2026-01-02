@@ -39,6 +39,8 @@ import android.widget.Toast
 import androidx.compose.ui.platform.LocalContext
 import coil.compose.SubcomposeAsyncImage
 import com.fury.shopathing.presentation.components.shimmerEffect
+import android.content.Intent
+import androidx.compose.material.icons.filled.Share
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -49,10 +51,27 @@ fun DetailScreen(
 ) {
     val context = LocalContext.current // To show Toast
     val state by viewModel.state.collectAsState()
+    val product = (state as? DetailUiState.Success)?.product
 
     Scaffold(
         topBar = {
             TopAppBar(
+                actions = {
+                    // Only show Share button if product is loaded
+                    if (product != null) {
+                        IconButton(onClick = {
+                            val sendIntent = Intent(Intent.ACTION_SEND).apply {
+                                // Now 'product' works because we defined it above
+                                putExtra(Intent.EXTRA_TEXT, "Check out this product: ${product.title}\nPrice: $${product.price}\n\nSent via ShopAThing app!")
+                                type = "text/plain"
+                            }
+                            val shareIntent = Intent.createChooser(sendIntent, "Share Product")
+                            context.startActivity(shareIntent)
+                        }) {
+                            Icon(Icons.Default.Share, contentDescription = "Share", tint = MaterialTheme.colorScheme.onPrimary)
+                        }
+                    }
+                },
                 title = { Text("Product Details") },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
