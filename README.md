@@ -9,7 +9,7 @@
 ![Firebase Auth](https://img.shields.io/badge/Auth-Firebase-FFCA28?style=flat&logo=firebase&logoColor=black)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=flat)
 
-<a href="https://github.com/SilentFURY-x/ShopAThing/releases/download/v1.0.0/ShopAThing-v1.0.0.apk">
+<a href="https://github.com/SilentFURY-x/ShopAThing-App/releases/download/v1.0.0/ShopAThing-v1.0.0.apk">
   <img src="https://img.shields.io/badge/Download-APK-3DDC84?style=for-the-badge&logo=android&logoColor=white" alt="Download APK"/>
 </a>
 
@@ -110,7 +110,7 @@ com.fury.shopathing
 ## ⚡ Setup & Installation
 **Download the App:**
 * Click below to download the latest stable version (v1.0.0) for your Android device:
-* 👉 **[Download ShopAThing-v1.0.0.apk](https://github.com/SilentFURY-x/ShopAThing/releases/download/v1.0.0/ShopAThing-v1.0.0.apk)**
+* 👉 **[Download ShopAThing-v1.0.0.apk](https://github.com/SilentFURY-x/ShopAThing-App/releases/download/v1.0.0/ShopAThing-v1.0.0.apk)**
     
 **OR**
 
