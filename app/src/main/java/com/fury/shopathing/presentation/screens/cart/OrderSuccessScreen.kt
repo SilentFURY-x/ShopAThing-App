@@ -9,7 +9,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.airbnb.lottie.compose.*
-import com.fury.shopathing.R // Make sure to import your R file
+import com.fury.shopathing.R
 import com.fury.shopathing.presentation.Screen
 
 @Composable
@@ -20,7 +20,7 @@ fun OrderSuccessScreen(
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.order_success))
     val progress by animateLottieCompositionAsState(
         composition = composition,
-        iterations = 1 // Play only once
+        iterations = 1 // play only once
     )
 
     Column(
