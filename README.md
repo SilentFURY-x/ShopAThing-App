@@ -1,11 +1,15 @@
+<div align="center">
+
 # 🛍️ ShopAThing
+### A Modern, Scalable Android E-Commerce Application
 
 ![Android](https://img.shields.io/badge/Platform-Android-3DDC84?style=flat&logo=android)
 ![Kotlin](https://img.shields.io/badge/Language-Kotlin-7F52FF?style=flat&logo=kotlin)
 ![Jetpack Compose](https://img.shields.io/badge/UI-Jetpack%20Compose-4285F4?style=flat&logo=jetpackcompose)
+![Firebase Auth](https://img.shields.io/badge/Auth-Firebase-FFCA28?style=flat&logo=firebase&logoColor=black)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=flat)
 
-> **A modern, offline-first e-commerce application built to demonstrate the power of scalable Android architecture.**
+</div>
 
 ---
 
@@ -14,6 +18,8 @@
 **ShopAThing** is a feature-rich shopping application engineered with **Clean Architecture** and **Modern Android Development (MAD)** standards.
 
 Unlike typical demo apps, ShopAThing focuses on **scalability, performance, and user experience**. It features a robust offline caching layer, server-side search optimization, and a fluid, animated UI that adapts to user preferences.
+
+> **"Not just a demo—a foundation for a real startup product."**
 
 ### ✨ Why this stands out?
 * **Performance First:** Handles lists of 1000+ items seamlessly using **Paging 3**.
