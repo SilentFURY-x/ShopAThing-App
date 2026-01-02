@@ -12,6 +12,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.fury.shopathing.presentation.Screen
 import kotlinx.coroutines.delay
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import com.fury.shopathing.R
 
 @Composable
 fun SplashScreen(
@@ -34,11 +43,32 @@ fun SplashScreen(
         }
     }
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(
-            text = "ShopAThing",
-            style = MaterialTheme.typography.displayMedium,
-            color = MaterialTheme.colorScheme.primary
-        )
+    // The UI Layout
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.primary), // Your brand color
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            // 1. THE APP LOGO
+            Image(
+                // Use 'ic_launcher_foreground' for the transparent look
+                painter = painterResource(id = R.mipmap.ic_launcher_foreground),
+                contentDescription = "App Logo",
+                modifier = Modifier.size(150.dp) // Adjust size as needed
+            )
+
+            // 2. (Optional) Your App Name Text
+            Text(
+                text = "ShopAThing",
+                style = MaterialTheme.typography.headlineLarge,
+                color = MaterialTheme.colorScheme.onPrimary,
+                fontWeight = FontWeight.Bold
+            )
+        }
     }
 }
