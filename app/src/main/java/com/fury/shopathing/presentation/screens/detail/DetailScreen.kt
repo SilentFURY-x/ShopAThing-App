@@ -41,6 +41,8 @@ import coil.compose.SubcomposeAsyncImage
 import com.fury.shopathing.presentation.components.shimmerEffect
 import android.content.Intent
 import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.ShoppingCart
+import com.fury.shopathing.presentation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,6 +72,11 @@ fun DetailScreen(
                         }) {
                             Icon(Icons.Default.Share, contentDescription = "Share", tint = MaterialTheme.colorScheme.onPrimary)
                         }
+                    }
+
+                    // 2. NEW: Cart Button (Always visible)
+                    IconButton(onClick = { navController.navigate(Screen.Cart.route) }) {
+                        Icon(Icons.Default.ShoppingCart, contentDescription = "Cart", tint = MaterialTheme.colorScheme.onPrimary)
                     }
                 },
                 title = { Text("Product Details") },
