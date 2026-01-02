@@ -1,64 +1,130 @@
-# ShopAThing 🛍️
+# 🛍️ ShopAThing
 
-**ShopAThing** is a modern, scalable Android E-commerce application built with **Jetpack Compose** and **Clean Architecture**. It features real-time product pagination, server-side filtering, offline-first cart management, and robust authentication.
+![Android](https://img.shields.io/badge/Platform-Android-3DDC84?style=flat&logo=android)
+![Kotlin](https://img.shields.io/badge/Language-Kotlin-7F52FF?style=flat&logo=kotlin)
+![Jetpack Compose](https://img.shields.io/badge/UI-Jetpack%20Compose-4285F4?style=flat&logo=jetpackcompose)
+![License](https://img.shields.io/badge/License-MIT-blue?style=flat)
 
-## 🚀 Features Implemented
-
-This project completes **Level 1, Level 2, and Level 3** requirements for the assignment, plus additional "Senior-Level" enhancements.
-
-### 🌟 Level 3: Advanced Logic & Architecture (Completed)
-- **Infinite Scrolling (Pagination):** Implemented using **Paging 3**. Seamlessly loads hundreds of products from the *DummyJSON* API without performance lag.
-- **Server-Side Search & Filtering:** Custom `PagingSource` implementation that handles search queries and category filtering directly from the server (Debounced search input for performance).
-- **Persistent Cart (Offline-First):** Uses **Room Database** to save cart items. Data persists even if the app is killed.
-    - Smart "Upsert" logic (increments quantity instead of duplicating items).
-    - Auto-remove item when quantity hits zero.
-- **Checkout Flow:** Clears local database and provides user feedback upon order completion.
-- **UI Bonus (Dark Mode):** Persistent Dark Mode toggle using **DataStore Preferences**. Remembers user choice across app restarts.
-
-### 🔒 Level 2: Auth & API (Completed)
-- **Firebase Authentication:** Full Email/Password Login and Signup flow.
-- **Smart Splash Screen:** Checks `FirebaseAuth` state on launch to auto-redirect users to Home (if logged in) or Login (if new).
-- **Network Layer:** Built with **Retrofit** & **OkHttp**, using standard DTOs and Mappers.
-
-### 🎨 Level 1: UI Foundation (Completed)
-- **Modern UI:** 100% Jetpack Compose implementation using Material 3 guidelines.
-- **components:** Reusable `ProductCard`, `SearchBar`, and `CartItem` components.
-- **Navigation:** Type-safe Jetpack Compose Navigation.
+> **A modern, offline-first e-commerce application built to demonstrate the power of scalable Android architecture.**
 
 ---
 
-## 🛠️ Tech Stack & Libraries
+## 📱 About The Project
 
-* **Language:** Kotlin
-* **UI Toolkit:** Jetpack Compose (Material 3)
-* **Architecture:** Clean Architecture (MVVM + Repository Pattern)
-* **Dependency Injection:** Dagger Hilt
-* **Network:** Retrofit + Gson
-* **Async/Concurrency:** Coroutines + Flow
-* **Database:** Room (SQLite)
-* **Pagination:** Paging 3 (RemoteMediator / PagingSource)
-* **Image Loading:** Coil
-* **Local Storage:** DataStore Preferences
-* **Authentication:** Firebase Auth
+**ShopAThing** is a feature-rich shopping application engineered with **Clean Architecture** and **Modern Android Development (MAD)** standards.
+
+Unlike typical demo apps, ShopAThing focuses on **scalability, performance, and user experience**. It features a robust offline caching layer, server-side search optimization, and a fluid, animated UI that adapts to user preferences.
+
+### ✨ Why this stands out?
+* **Performance First:** Handles lists of 1000+ items seamlessly using **Paging 3**.
+* **Smart Network Usage:** Implements **Debouncing** to minimize API calls during search.
+* **Offline Capable:** The cart persists across app restarts using **Room Database**.
+* **Reactive UI:** Fully built with **Jetpack Compose** and **Material 3**.
 
 ---
 
-## 📂 Project Structure
+## 🚀 Key Features
 
-The project follows strict **Clean Architecture** principles to ensure separation of concerns:
+### 🔍 Discovery & Navigation
+* **Infinite Scrolling:** Smooth pagination loads products effortlessly as you scroll.
+* **Smart Search:** Server-side search with **500ms debounce** to reduce network load.
+* **Dynamic Filtering:** Filter products by category using reactive chips.
+* **Shimmer Loading:** Skeleton animations provide a polished loading experience.
 
+### 🛒 Shopping Experience
+* **Persistent Cart:** Add items, update quantities, or remove products. Data is saved locally via **Room**, so your cart is never lost.
+* **Real-Time Badge:** A dynamic notification badge on the cart icon updates instantly as you shop.
+* **Seamless Checkout:** Animated checkout flow using **Lottie Animations** for visual feedback.
+
+### 🎨 User Experience (UX)
+* **Dark Mode:** A global, persistent Dark Theme toggle (saved via **DataStore**) that remembers your preference.
+* **Visual Polish:** Dynamic star rating bars, error handling, and empty state animations.
+* **Share Functionality:** Native Android share sheet integration to share product details.
+
+---
+
+## 🛠️ Tech Stack & Architecture
+
+The app follows strict **Clean Architecture (MVVM)** principles to ensure separation of concerns and testability.
+
+| Layer | Technologies Used |
+| :--- | :--- |
+| **UI** | Jetpack Compose, Material 3, Coil (Image Loading), Lottie (Animations) |
+| **Presentation** | MVVM Pattern, Kotlin Coroutines, StateFlow, Hilt (DI) |
+| **Domain** | Pure Kotlin Models, Repository Interfaces, Use Cases |
+| **Data** | Retrofit (API), Room (Local DB), DataStore (Preferences), Paging 3 |
+| **Auth** | Firebase Authentication |
+
+---
+
+## 📂 Architecture Overview
 ```text
 com.fury.shopathing
-├── data                // Data Layer (API, Room DB, Repositories)
+├── data 🌐 💾         // Data Layer (API, Room DB, Repositories)
 │   ├── local           // Room Entities & DAOs
 │   ├── remote          // Retrofit Interfaces & DTOs
 │   └── repository      // Implementation of Domain Interfaces
-├── domain              // Domain Layer (Pure Kotlin)
+├── domain  🧠          //  Domain Layer (Pure Kotlin)
 │   ├── model           // Data Classes (Product, CartItem)
 │   └── repository      // Interfaces
-├── di                  // Dependency Injection (Hilt Modules)
-├── presentation        // UI Layer (ViewModels, Composables)
+├── di 💉              //  Dependency Injection (Hilt Modules)
+├── presentation 🎨    //  UI Layer (ViewModels, Composables)
 │   ├── components      // Reusable UI widgets
 │   ├── screens         // (Home, Detail, Cart, Auth)
 │   └── theme           // Material 3 Theme & Type
 └── utils               // Constants & Helper Classes
+```
+---
+
+## ⚡ Setup & Installation
+1.  **Clone the repository:**
+    ```bash
+        git clone [https://github.com/SilentFURY-x/ShopAThing.git](https://github.com/SilentFURY-x/ShopAThing.git)
+    ```
+2.  **Open in Android Studio:**
+     * Requires Android Studio Hedgehog or newer.
+
+3.  **Firebase Setup:**
+     * This project uses Firebase Auth.
+     * Add your own google-services.json file to the /app directory.
+
+4.  **Build & Run:**
+     * Sync Gradle and run on an Emulator or Physical Device.
+
+---
+
+## 🤝 Contributing
+
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+1.  Fork the Project
+2.  Create your Feature Branch:
+    ```bash
+    git checkout -b feature/AmazingFeature
+    ```
+3.  Commit your Changes:
+    ```bash
+    git commit -m 'Add some AmazingFeature'
+    ```
+4.  Push to the Branch:
+    ```bash
+    git push origin feature/AmazingFeature
+    ```
+5.  Open a Pull Request
+
+---
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+## 👨‍💻 Author
+**Arjun Tyagi**
+* **GitHub:** SilentFURY-x
+
+---
+
+<p align="center">
+  <i>Built with ❤️ using Kotlin and Jetpack Compose.</i>
+</p>
