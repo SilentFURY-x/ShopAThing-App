@@ -47,28 +47,33 @@ Unlike typical demo apps, ShopAThing focuses on **scalability, performance, and 
 
 The app follows strict **Clean Architecture (MVVM)** principles to ensure separation of concerns and testability.
 
-| Layer | Technologies Used |
-| :--- | :--- |
-| **UI** | Jetpack Compose, Material 3, Coil (Image Loading), Lottie (Animations) |
-| **Presentation** | MVVM Pattern, Kotlin Coroutines, StateFlow, Hilt (DI) |
-| **Domain** | Pure Kotlin Models, Repository Interfaces, Use Cases |
-| **Data** | Retrofit (API), Room (Local DB), DataStore (Preferences), Paging 3 |
-| **Auth** | Firebase Authentication |
+| Layer | Component | Technology Used |
+| :--- | :--- | :--- |
+| **🎨 UI** | **Toolkit** | Jetpack Compose (Material 3) |
+| | **Images** | Coil (Async Loading) |
+| | **Animations** | Lottie & Shimmer |
+| **🧠 Logic** | **Architecture** | MVVM + Clean Architecture |
+| | **DI** | Dagger Hilt |
+| | **Async** | Coroutines & Flows |
+| **💾 Data** | **API** | Retrofit + OkHttp |
+| | **Local DB** | Room (SQLite) |
+| | **Prefs** | DataStore |
+| **☁️ Cloud** | **Auth** | Firebase Authentication |
 
 ---
 
 ## 📂 Architecture Overview
 ```text
 com.fury.shopathing
-├── data 🌐 💾         // Data Layer (API, Room DB, Repositories)
+├── data                // Data Layer (API, Room DB, Repositories)
 │   ├── local           // Room Entities & DAOs
 │   ├── remote          // Retrofit Interfaces & DTOs
 │   └── repository      // Implementation of Domain Interfaces
-├── domain  🧠          //  Domain Layer (Pure Kotlin)
+├── domain              // Domain Layer (Pure Kotlin)
 │   ├── model           // Data Classes (Product, CartItem)
 │   └── repository      // Interfaces
-├── di 💉              //  Dependency Injection (Hilt Modules)
-├── presentation 🎨    //  UI Layer (ViewModels, Composables)
+├── di                  // Dependency Injection (Hilt Modules)
+├── presentation        // UI Layer (ViewModels, Composables)
 │   ├── components      // Reusable UI widgets
 │   ├── screens         // (Home, Detail, Cart, Auth)
 │   └── theme           // Material 3 Theme & Type
