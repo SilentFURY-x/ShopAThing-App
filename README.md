@@ -76,6 +76,22 @@ com.fury.shopathing
 ```
 ---
 
+## 📸 Screenshots
+
+<div align="center">
+  
+| **Home (Dark Mode)** | **Product Details** | **Smart Cart** |
+|:---:|:---:|:---:|
+| <img src="screenshots/home_dark.png" width="220" /> | <img src="screenshots/detail.png" width="220" /> | <img src="screenshots/cart.png" width="220" /> |
+
+| **Search & Filter** | **Success Animation** | **Empty State** |
+|:---:|:---:|:---:|
+| <img src="screenshots/search.png" width="220" /> | <img src="screenshots/success.gif" width="220" /> | <img src="screenshots/empty.gif" width="220" /> |
+
+</div>
+
+---
+
 ## ⚡ Setup & Installation
 1.  **Clone the repository:**
     ```bash
@@ -120,8 +136,14 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ---
 
 ## 👨‍💻 Author
+<div align="center">
+
 **Arjun Tyagi**
-* **GitHub:** SilentFURY-x
+
+[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/SilentFURY-x)
+[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/arjun-tyagi-84b1b5328/)
+
+</div>
 
 ---
 
