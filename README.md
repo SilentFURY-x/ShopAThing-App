@@ -95,13 +95,17 @@ com.fury.shopathing
 
 <div align="center">
   
-| **Home (Dark Mode)** | **Product Details** | **Smart Cart** |
+| **Home** | **Home (Dark Mode)** | **Product Details** |
 |:---:|:---:|:---:|
-| <img src="screenshots/home_dark.png" width="220" /> | <img src="screenshots/detail.png" width="220" /> | <img src="screenshots/cart.png" width="220" /> |
+| <img src="screenshots/home.jpg" width="220" /> | <img src="screenshots/home_dark.jpg" width="220" /> | <img src="screenshots/product_details.jpg" width="220" /> |
 
-| **Search & Filter** | **Success Animation** | **Empty State** |
+| **Search And Pagination** | **Empty Cart Animation** | **Order Placed Animation** |
 |:---:|:---:|:---:|
-| <img src="screenshots/search.png" width="220" /> | <img src="screenshots/success.gif" width="220" /> | <img src="screenshots/empty.gif" width="220" /> |
+| <img src="screenshots/search_pagination.gif" width="220" /> | <img src="screenshots/empty_cart.gif" width="220" /> | <img src="screenshots/order_placed_animation.gif" width="220" /> |
+
+| **Login Page** | **Profile** | **Cart** |
+|:---:|:---:|:---:|
+| <img src="screenshots/login.jpg" width="220" /> | <img src="screenshots/profile.jpg" width="220" /> | <img src="screenshots/cart.jpg" width="220" /> |
 
 </div>
 
